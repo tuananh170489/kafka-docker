@@ -11,20 +11,14 @@ LABEL org.label-schema.name="kafka" \
       org.label-schema.schema-version="1.0" \
       maintainer="tuananh170489@gmail.com"
 
-ENV KAFKA_VERSION=$kafka_version \
-    SCALA_VERSION=$scala_version \
-    JAVA_HOME=/opt/kafka/jdk \
-    KAFKA_HOME=/opt/kafka
+ENV	KAFKA_HOME=/usr/share/kafka \
+		PATH=${PATH}:${JAVA_HOME}/bin:${KAFKA_HOME}/bin
 
-ENV PATH=${PATH}:${JAVA_HOME}/bin:${KAFKA_HOME}/bin
-
-VOLUME ["/tmp/kafka-logs"]
+RUN apk add --no-cache bash su-exec openjdk11-jre
 
 EXPOSE 9092 2181
 
-WORKDIR /opt/kafka
-
-COPY jdk ./jdk
+WORKDIR /usr/share/kafka
 
 COPY bin ./bin
 
@@ -33,3 +27,9 @@ COPY libs ./libs
 COPY logs ./logs
 
 COPY config ./config
+
+COPY kafka-entrypoint.sh /usr/share/kafka/kafka-entrypoint.sh
+
+ENTRYPOINT ["/usr/share/kafka/kafka-entrypoint.sh"]
+
+CMD ["bin/kafka-server-start.sh", "config/server.properties"]
