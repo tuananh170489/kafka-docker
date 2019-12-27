@@ -1,2 +1,2 @@
 
-# Build Docker image for Kafka
+# Kafka image for Kubernetes
