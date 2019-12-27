@@ -11,8 +11,8 @@ LABEL org.label-schema.name="kafka" \
       org.label-schema.schema-version="1.0" \
       maintainer="tuananh170489@gmail.com"
 
-ENV	KAFKA_HOME=/usr/share/kafka \
-		PATH=${PATH}:${JAVA_HOME}/bin:${KAFKA_HOME}/bin
+ENV KAFKA_HOME=/usr/share/kafka \
+    PATH=${PATH}:${JAVA_HOME}/bin:${KAFKA_HOME}/bin
 
 RUN apk add --no-cache bash su-exec openjdk11-jre
 
